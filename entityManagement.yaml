@@ -1,0 +1,631 @@
+openapi: 3.0.1
+info:
+  title: Entity Management
+  description: This is a sample server entity management.
+  termsOfService: http://swagger.io/terms/
+  contact:
+    email: team@pharmIT.io
+  license:
+    name: Apache 2.0
+    url: http://www.apache.org/licenses/LICENSE-2.0.html
+  version: 1.0.0
+externalDocs:
+  description: Find out more about pharmit
+  url: http://pharmit.in
+servers:
+- url: https://localhost:3000/v1
+- url: http://localhost:30000/v1
+tags:
+- name: entity
+  description: Entity - Registration API
+- name: user
+  description: User - Registration API
+- name: role
+  description: Role - Registration API
+paths:
+  /Entity/createEntity:
+    post:
+      tags:
+      - entity
+      summary: Create Entity
+      description: create a new entity.
+      operationId: createEntity
+      parameters:
+      - name: entityName
+        in: query
+        required: true
+        schema:
+          type: string
+      - name: entityTypeId
+        in: query
+        required: true
+        schema:
+          type: integer
+      - name: addressLine1
+        in: query
+        required: true
+        schema:
+          type: string
+      - name: addressLine2
+        in: query
+        required: true
+        schema:
+          type: string
+      - name: countryId
+        in: query
+        required: true
+        schema:
+          type: integer
+      - name: stateId
+        in: query
+        required: true
+        schema:
+          type: integer
+      - name: cityId
+        in: query
+        required: true
+        schema:
+          type: integer
+      - name: pinCode
+        in: query
+        required: true
+        schema:
+          type: integer
+      - name: mobileNumber
+        in: query
+        required: true
+        schema:
+          type: integer
+      - name: pan
+        in: query
+        required: true
+        schema:
+          type: string
+      - name: Affiliate
+        description: mandatory only for distributor and cnf
+        in: query
+        required: true
+        schema:
+          type: string
+      requestBody:
+        description: Creates entity object
+        content:
+          '*/*':
+            schema:
+              $ref: '#/components/schemas/entity_register'
+        required: true
+      responses:
+        200:
+          description: success
+          content:
+           application/json:
+            schema:
+             $ref: '#/components/schemas/ApiResponse'
+              
+  /Entity/updateEntity:
+    put:
+      tags:
+      - entity
+      summary: Update an entity
+      operationId: updateEntity
+      parameters:
+      - name: id
+        in: query
+        description: entity id
+        required: true
+        schema:
+          type: integer
+      requestBody:
+        description: List of user object
+        content:
+          '*/*':
+            schema:
+              type: array
+              items:
+                $ref: '#/components/schemas/entity_register'
+        required: true
+      responses:
+        200:
+          description: success
+          content:
+           application/json:
+            schema:
+             $ref: '#/components/schemas/ApiResponse'
+  /Entity/listAllEntity:
+    get:
+      tags:
+      - entity
+      summary: Lists all the entities
+      operationId: listAllEntity
+      responses:
+        200:
+          description: success
+  /Entity/listEntityById/{Id}:
+    get:
+      tags:
+      - entity
+      summary: Lists entity by Id
+      operationId: listEntityById
+      parameters:
+      - name: Id
+        in: path
+        description: entity id
+        required: true
+        schema:
+          type: string
+      responses:
+        200:
+          description: success
+        400:
+          description: Invalid id supplied
+          content: {}
+  /Entity/listEntityByType/{entityTypeId}:
+    get:
+      tags:
+      - entity
+      summary: Lists entity by Type
+      operationId: listEntityByType
+      parameters:
+      - name: entityTypeId
+        in: path
+        description: entity type id
+        required: true
+        schema:
+          type: string
+      responses:
+        200:
+          description: success
+        400:
+          description: Invalid entityTypeId supplied
+          content: {}
+  /User/createUser:
+    post:
+      tags:
+      - user
+      summary: Creates user
+      description: This can only be done by the logged in user.
+      operationId: createUser
+      requestBody:
+        description: Created user object
+        content:
+          '*/*':
+            schema:
+              $ref: '#/components/schemas/user_register'
+        required: true
+      responses:
+        200:
+          description: success
+          content:
+           application/json:
+            schema:
+             $ref: '#/components/schemas/ApiResponse'
+  /User/updateUser:
+    put:
+      tags:
+      - user
+      summary: updates an user 
+      operationId: updateUser
+      requestBody:
+        description: List of user object
+        content:
+          '*/*':
+            schema:
+              type: array
+              items:
+                $ref: '#/components/schemas/user_register'
+        required: true
+      responses:
+        200:
+          description: success
+          content:
+           application/json:
+            schema:
+             $ref: '#/components/schemas/ApiResponse'
+  /User/listAllUser:
+    get:
+      tags:
+      - user
+      summary: Lists all users
+      operationId: listAllUser
+      responses:
+        200:
+          description: success
+  /User/listUserByDivision/{divisionId}:
+    get:
+      tags:
+      - user
+      summary: Lists user by divisionId
+      operationId: listUserByDivision
+      parameters:
+      - name: divisionId
+        in: path
+        description: divisionId of the user
+        required: true
+        schema:
+          type: string
+      responses:
+        200:
+         description: success
+     
+  /User/listUserById{userId}:
+    get:
+      tags:
+      - user
+      summary: Lists user by Id
+      operationId: listUserById
+      parameters:
+      - name: userId
+        in: path
+        description: userId of the user
+        required: true
+        schema:
+          type: string
+      responses:
+        200:
+          description: success
+        400:
+          description: Invalid userId supplied
+          content: {}
+  /Role/createRole:
+    post:
+      tags:
+      - role
+      summary: Create role
+      description: Roles
+      operationId: createRole
+      requestBody:
+        description: Creates role
+        content:
+          '*/*':
+            schema:
+              $ref: '#/components/schemas/role_master'
+        required: true
+      responses:
+        200:
+          description: success
+          content:
+           application/json:
+            schema:
+             $ref: '#/components/schemas/ApiResponse'
+  /Role/updateRole:
+    put:
+      tags:
+      - role
+      summary: updates role
+      operationId: updateRole
+      requestBody:
+        description: updates a role object
+        content:
+          '*/*':
+            schema:
+              type: array
+              items:
+                $ref: '#/components/schemas/role_master'
+        required: true
+      responses:
+        200:
+          description: success
+          content:
+           application/json:
+            schema:
+             $ref: '#/components/schemas/ApiResponse'
+  /Role/listAllRoles:
+    get:
+      tags:
+      - role
+      summary: Creates a list of roles 
+      operationId: listAllRoles
+      responses:
+        200:
+          description: success
+          
+  /Role/listRoleById/{roleId}:
+    get:
+      tags:
+      - role
+      summary: Lists roles by Id
+      operationId: listRoleById
+      parameters:
+      - name: roleId
+        in: path
+        description: roleId of the user
+        required: true
+        schema:
+          type: string
+      responses:
+        200:
+          description: success
+        400:
+          description: Invalid RoleId supplied
+components:
+  schemas:
+    entity_register:
+      type: object
+      properties:
+        entityName:
+          type: string
+        entityTypeId:
+          type: integer
+          format: int32
+        entityId:
+          type: integer
+          format: int32
+        affiliationAccountId:
+          type: integer
+          format: int32
+        addressLine1:
+          type: string
+        addressLine2:
+          type: string
+        countryId:
+          type: integer
+          format: int32
+        stateId:
+          type: integer
+          format: int32
+        cityId:
+          type: integer
+          format: int32
+        pinCode:
+          type: string
+        phonenumber:
+          type: string
+        mobileNumber:
+          type: string
+        email:
+          type: string
+        contactName:
+          type: string
+        priorityId:
+          type: integer
+          format: int32
+        pan:
+          type: string
+        gstn:
+          type: string
+        urdNumber:
+          type: string
+        corpId:
+          type: string
+        drugLicence_1:
+          type: string
+        drugLicence_2:
+          type: string
+        drugLicenceValidity:
+          type: string
+        foodLicence_1:
+          type: string
+        foodLicenceValidity:
+          type: string
+        salesBalanceLimit:
+          type: number
+          format: float
+        noOfCrDays:
+          type: integer
+          format: int32
+        noOfGraceDays:
+          type: integer
+          format: int32
+        calculateOn:
+          type: string
+        bankId:
+          type: integer
+          format: int32
+        accountNo:
+          type: string
+        upiId:
+          type: string
+        openingBalance:
+          type: number
+          format: float
+        currentBalance:
+          type: number
+          format: float
+        discount:
+          type: number
+          format: float
+        bankCommission:
+          type: number
+          format: float
+        transportTypeId:
+          type: integer
+          format: int32
+        defaultCharge:
+          type: number
+          format: float
+        caretaker:
+          type: integer
+          format: int32
+        contact:
+          type: string
+        terms:
+          type: string
+        salesmanId:
+          type: integer
+          format: int64
+        managerId:
+          type: integer
+          format: int64
+        sales_commission:
+          type: number
+          format: float
+        routeId:
+          type: integer
+          format: int32
+        accountId:
+          type: integer
+          format: int64
+        aadharId:
+          type: string
+        companyCode:
+          type: string
+        faxNumber:
+          type: string
+        repName:
+          type: string
+        repPhoneNumber:
+          type: string
+        password:
+          type: string
+        zoneId:
+          type: integer
+          format: int64
+        contactDob:
+          type: string
+        status:
+          type: integer
+          format: int32
+        syncStatus:
+          type: integer
+          format: int32
+        createdDate:
+          type: string
+          format: date
+        modifiedDate:
+          type: string
+          format: date
+        createdUser:
+          type: string
+        modifiedUser:
+          type: string
+      xml:
+        name: Entity
+    user_register:
+      type: object
+      properties:
+        userName:
+          type: string
+        mobileNumber:
+          type: string
+        contactNumber:
+          type: string
+        aadharId:
+          type: string
+        reportTo:
+          type: integer
+          format: int64
+        email:
+          type: string
+        genderId:
+          type: integer
+          format: int64
+        photo:
+          type: string
+        nationality:
+          type: string
+        address:
+          type: string
+        countryId:
+          type: integer
+          format: int64
+        stateId:
+          type: integer
+          format: int64
+        cityId:
+          type: integer
+          format: int64
+        referredBy:
+          type: integer
+          format: int64
+        referenceRelation:
+          type: string
+        pincode:
+          type: string
+        joiningDate:
+          type: string
+          format: date
+        password:
+          type: string
+        departmentId:
+          type: integer
+          format: int64
+        permissions:
+          type: string
+        dob:
+          type: string
+          format: date
+        status:
+          type: string
+        syncStatus:
+          type: integer
+        anniversary_date:
+          type: string
+          format: date
+        lastLoginDate:
+          type: string
+          format: date
+        approvedSalary:
+          type: number
+          format: float
+        designationSalary:
+          type: number
+          format: float
+        lastPaidDate:
+          type: string
+          format: date
+        paymentModeId:
+          type: integer
+          format: int64
+        bankAccount:
+          type: string
+        bankId:
+          type: integer
+          format: int64
+        assignedHolidays:
+          type: string
+        specialization:
+          type: string
+        licenceNumber:
+          type: string
+        accountId:
+          type: integer
+          format: int64
+        zoneId:
+          type: integer
+          format: int64
+        divisionId:
+          type: integer
+          format: int64
+        roleId:
+          type: integer
+          format: int64
+        entityTypeId:
+          type: integer
+          format: int64
+        entityId:
+          type: integer
+          format: int64
+        createdDate:
+          type: string
+          format: date
+        modifiedDate:
+          type: string
+          format: date
+      xml:
+        name: User
+    role_master:
+      type: object
+      properties:
+        roleId:
+          type: integer
+          format: int64
+        roleName:
+          type: string
+        description:
+          type: string
+      xml:
+        name: Role
+    ApiResponse:
+      type: array
+      items:
+        properties:
+          status:
+            type: string
+          affectedRows:
+            type: integer
+            example: 1
+          insertId:
+            type: integer
+            example: 1
+
+   
