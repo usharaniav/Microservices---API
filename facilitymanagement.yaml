@@ -1,0 +1,680 @@
+openapi: 3.0.1
+info:
+  title: Entity Management
+  description: This is a sample server entity management.
+  termsOfService: http://swagger.io/terms/
+  contact:
+    email: team@pharmIT.io
+  license:
+    name: Apache 2.0
+    url: http://www.apache.org/licenses/LICENSE-2.0.html
+  version: 1.0.0
+externalDocs:
+  description: Find out more about pharmit
+  url: http://pharmit.in
+servers:
+- url: https://localhost:3000/v1
+- url: http://localhost:30000/v1
+tags:
+- name: rack
+  description: Entity - Registration API
+- name: route
+  description: Route - Registration API
+- name: godown
+  description: Gowdown - Registration API
+- name: fridge
+  description: Fridge - Registration API
+- name: ccm
+  description: CCM - Registration API
+  
+paths:
+  /Facility/createRack:
+    post:
+      tags:
+      - rack
+      summary: Create rack
+      description: create a new rack.
+      operationId: createRack
+      parameters:
+      - name: rackName
+        in: query
+        required: true
+        schema:
+          type: string
+      requestBody:
+        description: Creates rack object
+        content:
+          '*/*':
+            schema:
+              $ref: '#/components/schemas/rack_master'
+        required: true
+      responses:
+        200:
+          description: success
+          content:
+           application/json:
+            schema:
+             $ref: '#/components/schemas/ApiResponse'
+  /Facility/updateRack:
+    put:
+      tags:
+      - rack
+      summary: Update a rack
+      operationId: updateRack
+      parameters:
+      - name: id
+        in: query
+        required: true
+        schema:
+          type: integer
+      requestBody:
+        description: List of rack object
+        content:
+          '*/*':
+            schema:
+              type: array
+              items:
+                $ref: '#/components/schemas/rack_master'
+        required: true
+      responses:
+        200:
+          description: success
+          content:
+           application/json:
+            schema:
+             $ref: '#/components/schemas/ApiResponse'
+  /Facility/listAllRack:
+    get:
+      tags:
+      - rack
+      summary: Lists all the racks
+      operationId: listAllRack
+      responses:
+        200:
+          description: success
+          
+  /Facility/listRackById/{rackId}:
+    get:
+      tags:
+      - rack
+      summary: Lists rack by Id
+      operationId: listEntityById
+      parameters:
+      - name: rackId
+        in: path
+        required: true
+        schema:
+          type: string
+      responses:
+        200:
+          description: success
+        400:
+          description: Invalid id supplied
+          content: {}
+          
+  /Facility/createRoute:
+    post:
+      tags:
+      - route
+      summary: Create route
+      description: create a new route.
+      operationId: createRoute
+      parameters:
+      - name: routeName
+        in: query
+        required: true
+        schema:
+          type: string
+      - name: city
+        in: query
+        required: true
+        schema:
+          type: string
+      - name: state
+        in: query
+        required: true
+        schema:
+          type: string
+      - name: country
+        in: query
+        required: true
+        schema:
+          type: string
+      requestBody:
+        description: Creates entity object
+        content:
+          '*/*':
+            schema:
+              $ref: '#/components/schemas/route_register'
+        required: true
+      responses:
+        200:
+          description: success
+          content:
+           application/json:
+            schema:
+             $ref: '#/components/schemas/ApiResponse'
+  /Facility/updateRoute:
+    put:
+      tags:
+      - route
+      summary: Update a route
+      operationId: updateRoute
+      parameters:
+      - name: routeId
+        in: query
+        required: true
+        schema:
+          type: integer
+      requestBody:
+        description: List of route object
+        content:
+          '*/*':
+            schema:
+              type: array
+              items:
+                $ref: '#/components/schemas/route_register'
+        required: true
+      responses:
+        200:
+          description: success
+          content:
+           application/json:
+            schema:
+             $ref: '#/components/schemas/ApiResponse'
+  /Facility/listAllRoute:
+    get:
+      tags:
+      - route
+      summary: Lists all the routes
+      operationId: listAllRoute
+      responses:
+        200:
+          description: success
+          
+  /Facility/listRouteById/{routeId}:
+    get:
+      tags:
+      - route
+      summary: Lists rack by Id
+      operationId: listRouteById
+      parameters:
+      - name: routeId
+        in: path
+        required: true
+        schema:
+          type: string
+      responses:
+        200:
+          description: success
+        400:
+          description: Invalid routeId supplied
+          content: {}
+          
+  /Facility/createGodown:
+    post:
+      tags:
+      - godown
+      summary: Create godown
+      description: create a new godown.
+      operationId: createGodown
+      parameters:
+      - name: godownName
+        in: query
+        required: true
+        schema:
+          type: string
+      requestBody:
+        description: Creates godown object
+        content:
+          '*/*':
+            schema:
+              $ref: '#/components/schemas/godown_register'
+        required: true
+      responses:
+        200:
+          description: success
+          content:
+           application/json:
+            schema:
+             $ref: '#/components/schemas/ApiResponse'
+  /Facility/updateGodown:
+    put:
+      tags:
+      - godown
+      summary: Update a godown
+      operationId: updateGodown
+      parameters:
+      - name: godownId
+        in: query
+        required: true
+        schema:
+          type: integer
+      requestBody:
+        description: List of godown object
+        content:
+          '*/*':
+            schema:
+              type: array
+              items:
+                $ref: '#/components/schemas/godown_register'
+        required: true
+      responses:
+        200:
+          description: success
+          content:
+           application/json:
+            schema:
+             $ref: '#/components/schemas/ApiResponse'
+             
+  /Facility/listAllGodown:
+    get:
+      tags:
+      - godown
+      summary: Lists all the godowns
+      operationId: listAllGodown
+      responses:
+        200:
+          description: success
+          
+  /Facility/listGodownById/{godownId}:
+    get:
+      tags:
+      - godown
+      summary: Lists godown by Id
+      operationId: listGodownById
+      parameters:
+      - name: godownId
+        in: path
+        required: true
+        schema:
+          type: string
+      responses:
+        200:
+          description: success
+        400:
+          description: Invalid godownId supplied
+          content: {}
+          
+  /Facility/createFridge:
+    post:
+      tags:
+      - fridge
+      summary: Create fridge
+      description: create a new fridge.
+      operationId: createFridge
+      parameters:
+      - name: fridgeName
+        in: query
+        required: true
+        schema:
+          type: string
+      requestBody:
+        description: Creates fridge object
+        content:
+          '*/*':
+            schema:
+              $ref: '#/components/schemas/fridge_master'
+        required: true
+      responses:
+        200:
+          description: success
+          content:
+           application/json:
+            schema:
+             $ref: '#/components/schemas/ApiResponse'
+  /Facility/updateFridge:
+    put:
+      tags:
+      - fridge
+      summary: Update a fridge
+      operationId: updateFridge
+      parameters:
+      - name: fridgeId
+        in: query
+        required: true
+        schema:
+          type: integer
+      requestBody:
+        description: List of fridge object
+        content:
+          '*/*':
+            schema:
+              type: array
+              items:
+                $ref: '#/components/schemas/fridge_master'
+        required: true
+      responses:
+        200:
+          description: success
+          content:
+           application/json:
+            schema:
+             $ref: '#/components/schemas/ApiResponse'
+  /Facility/listAllFridge:
+    get:
+      tags:
+      - fridge
+      summary: Lists all the fridge
+      operationId: listAllFridge
+      responses:
+        200:
+          description: success
+          
+  /Facility/listFridgeById/{fridgeId}:
+    get:
+      tags:
+      - fridge
+      summary: Lists fridge by Id
+      operationId: listFridgeById
+      parameters:
+      - name: fridgeId
+        in: path
+        required: true
+        schema:
+          type: string
+      responses:
+        200:
+          description: success
+        400:
+          description: Invalid fridgeId supplied
+          content: {}
+          
+  /Facility/createCcm:
+    post:
+      tags:
+      - ccm
+      summary: Create ccm
+      description: create a new ccm.
+      operationId: createCcm
+      parameters:
+      - name: kitName
+        in: query
+        required: true
+        schema:
+          type: string
+      requestBody:
+        description: Creates godown object
+        content:
+          '*/*':
+            schema:
+              $ref: '#/components/schemas/ccm_register'
+        required: true
+      responses:
+        200:
+          description: success
+          content:
+           application/json:
+            schema:
+             $ref: '#/components/schemas/ApiResponse'
+  /Facility/updateCcm:
+    put:
+      tags:
+      - ccm
+      summary: Update a ccm
+      operationId: updateCcm
+      parameters:
+      - name: ccmId
+        in: query
+        required: true
+        schema:
+          type: integer
+      requestBody:
+        description: List of ccm object
+        content:
+          '*/*':
+            schema:
+              type: array
+              items:
+                $ref: '#/components/schemas/route_register'
+        required: true
+      responses:
+        200:
+          description: success
+          content:
+           application/json:
+            schema:
+             $ref: '#/components/schemas/ApiResponse'
+  /Facility/listAllCcm:
+    get:
+      tags:
+      - ccm
+      summary: Lists all the Ccm
+      operationId: listAllCcm
+      responses:
+        200:
+          description: success
+          
+  /Facility/listCcmById/{CcmId}:
+    get:
+      tags:
+      - ccm
+      summary: Lists ccm by Id
+      operationId: listCcmById
+      parameters:
+      - name: CcmId
+        in: path
+        required: true
+        schema:
+          type: string
+      responses:
+        200:
+          description: success
+        400:
+          description: Invalid id supplied
+          content: {}
+components:
+    schemas:
+      rack_master:
+        type: object
+        properties:
+          rackName:
+            type: string
+          floorNumber:
+           type: string
+           format: varchar
+          generalInfo:
+            type: string
+            format: longtext
+          rackCodeName:
+            type: string
+            format: varchar
+          ccmEnabled:
+            type: integer
+            format: int64
+          companies:
+            type: string
+            format: varchar
+          status:
+            type: integer
+            format: int32
+          syncStatus: 
+            type: integer
+            format: int32
+          entityTypeId:
+            type: integer
+            format: int32
+          entityId:
+            type: integer
+            format: int64
+          createdDate:
+            type: string
+            format: date
+          modifiedDate:
+            type: string
+            format: date
+          createdUser:
+            type: string
+          modifiedUser:
+            type: string  
+      route_register:
+        type: object
+        properties:
+          routeName:
+            type: string
+          cityId:
+            type: integer
+            format: int64
+          stateId:
+            type: integer
+            format: int64
+          countryId:
+            type: integer
+            format: int64
+          areaManager:
+            type: integer
+            format: int64
+          salesman:
+            type: integer
+            format: int64
+          ccmEnabled:
+            type: string
+          daysOfWeek:
+            type: string
+          ccmId:
+            type: string
+          apprExpense:
+            type: number
+            format: float
+          status:
+           type: integer
+           format: int32
+          syncStatus: 
+           type: integer
+           format: int32
+          entityTypeId:
+           type: integer
+           format: int32
+          entityId:
+           type: integer
+           format: int64
+          createdDate:
+           type: string
+           format: date
+          modifiedDate:
+           type: string
+           format: date
+          createdUser:
+           type: string
+          modifiedUser:
+           type: string      
+      godown_register:
+        type: object
+        properties:
+          godownName:
+           type: string
+          premises:
+            type: integer
+            format: int32
+          ccmEnabled:
+            type: integer
+            format: int32
+          managerId:
+            type: integer
+            format: int32
+          status:
+            type: integer
+            format: int32
+          syncStatus: 
+            type: integer
+            format: int32
+          entityTypeId:
+            type: integer
+            format: int32
+          entityId:
+            type: integer
+            format: int64
+          createdDate:
+            type: string
+            format: date
+          modifiedDate:
+            type: string
+            format: date
+          createdUser:
+            type: string
+          modifiedUser:
+            type: string
+      fridge_master:
+        type: object
+        properties:
+          fridgeName:
+            type: string
+          floor:
+            type: string
+          dateOfPurchase:
+            type: string
+            format: date-time
+          machinePartNumber:
+            type: string
+          status:
+            type: integer
+            format: int32
+          syncStatus: 
+            type: integer
+            format: int32
+          entityTypeId:
+            type: integer
+            format: int32
+          entityId:
+           type: integer
+           format: int64
+          createdDate:
+            type: string
+            format: date
+          modifiedDate:
+            type: string
+            format: date
+          createdUser:
+            type: string
+          modifiedUser:
+           type: string
+      ccm_register:
+        type: object
+        properties:
+          kitName:
+            type: string
+          kitNumber:
+            type: string
+          fridgeId:
+            type: integer
+            format: int32
+          purchaseDate:
+            type: string
+            format: date
+          expiryDate:
+            type: string
+            format: date
+          status:
+            type: string
+          syncStatus: 
+            type: integer
+            format: int32
+          entityTypeId:
+            type: integer
+            format: int32
+          entityId:
+            type: integer
+            format: int32
+          createdDate:
+            type: string
+            format: date
+          modifiedDate:
+            type: string
+            format: date
+          createdUser:
+            type: string
+          modifiedUser:
+           type: string
+      ApiResponse:
+         type: array
+         items:
+           properties:
+            status:
+              type: string
+            affectedRows:
+              type: integer
+              example: 1
+            insertId:
+              type: integer
+              example: 1
+   
